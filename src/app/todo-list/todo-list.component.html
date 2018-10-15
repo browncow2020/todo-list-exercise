@@ -1,0 +1,17 @@
+<h2 id="todoListTitle">{{ listTitle }}</h2>
+<p *ngIf="todoItems.length == 0" >You have no to do items. Add some!</p>
+<ul *ngIf="todoItems.length > 0"  aria-labelledby="todoListTitle" class="todo-list" >
+  <li *ngFor="let todo of todoItems; let i = index " class="todo-list-item {{todo.state}}">
+    <input type="checkbox" name="todoItem" id="todoItem{{i}}" value="{{todo.desc}}" (click)="toggleTodoItem($event)" [checked]="todo.state == 'completed'"><label for="todoItem{{i}}">{{todo.desc}}</label>
+    <button (click)="editTodoItem(i)" *ngIf="todo.state !== 'completed'">Edit</button><button (click)="deleteTodoItem(i)">Delete</button>
+  </li>
+</ul>
+<div *ngIf="editMode === false">
+  <label for="newItem">New todo item:</label> <input type="text" name="newItem" id="newItem" [(ngModel)]="newTodoItem" >
+  <button (click)="addTodoItem()">Add</button>
+</div>
+<div *ngIf="editMode === true">
+  <label for="editItem">Edit todo item:</label> <input type="text" name="editItem" id="editItem" [(ngModel)]="existingTodoItemDesc" >
+  <button (click)="SaveEditTodoItem()">Save edit</button>
+</div>
+
